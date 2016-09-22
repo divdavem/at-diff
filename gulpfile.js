@@ -57,7 +57,7 @@ gulp.task("pre-ngc", function() {
 
 gulp.task("build", function(done) {
     webpack({
-        entry: [path.join(__dirname, "src/ui/atdiff.ts")],
+        entry: [path.join(__dirname, "src/ui/ngFromCDN.js"), path.join(__dirname, "src/ui/atdiff.ts")],
         output: {
             path: path.join(__dirname, "build/ui/browser"),
             filename: "at-diff.js"
@@ -71,8 +71,8 @@ gulp.task("build", function(done) {
                 loader: "awesome-typescript-loader"
             }]
         },
-        /*externals: function (context, request, callback) {
-            const match = /^@angular\/([^/]+)\/?$/.exec(request);
+        externals: function (context, request, callback) {
+            const match = /^@angular\/([^/]+)\/?/.exec(request);
             if (match) {
                 // "@angular/core/*": "var ng.core"
                 // "@angular/common/*": "var ng.common"
@@ -82,7 +82,7 @@ gulp.task("build", function(done) {
                 return;
             }
             callback();
-        },*/
+        },
         plugins: [/*
             new webpack.optimize.UglifyJsPlugin({
                 output: {
