@@ -35,6 +35,7 @@ module.exports = function (output) {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>at-diff results</title>
         ${libs[mode]}${setMode}
+        <script>/*Object.assign(ng.core, ng.core.__private_core__);*/</script>
     </head>
     <body>
         <atdiff-app></atdiff-app>

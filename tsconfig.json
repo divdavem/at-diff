@@ -10,6 +10,13 @@
     "experimentalDecorators": true,
     "outDir": "build/ts"
   },
+  "angularCompilerOptions": {
+    "outDir": ".",
+    "debug": false
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "ignoreDiagnostics": [2346]
+  },
   "files": [
     "typings/index.d.ts",
     "src/ui/app.module.ts"

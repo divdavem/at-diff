@@ -37,11 +37,22 @@ const checkWebpackErrors = function (done) {
 };
 
 gulp.task("clean", function() {
-    return rimraf(path.join(__dirname, "build"));
+    return Promise.all([
+        rimraf(path.join(__dirname, "build")),
+        rimraf(path.join(__dirname, "src", "**", "*.ngfactory.ts"))
+    ]);
 });
 
 gulp.task("clean-doc", function() {
     return rimraf(path.join(__dirname, "doc-output"));
+});
+
+gulp.task("pre-ngc", function() {
+    return gulp.src(["src/**/"], {
+        base: "src",
+        mark: true,
+        read: false
+    }).pipe(gulp.dest("build/ts"));
 });
 
 gulp.task("build", function(done) {
@@ -52,26 +63,33 @@ gulp.task("build", function(done) {
             filename: "at-diff.js"
         },
         resolve: {
-            extensions: ["", ".webpack.js", ".web.js", ".ts", ".js"]
+            extensions: ["", ".ts", ".js"],
+            packageMains: ["module", "main"]
         },
         module: {
             loaders: [{
                 loader: "awesome-typescript-loader"
             }]
         },
-        externals: {
-            "@angular/core": "var ng.core",
-            "@angular/forms": "var ng.forms",
-            "@angular/platform-browser": "var ng.platformBrowser",
-            "@angular/platform-browser-dynamic": "var ng.platformBrowserDynamic"
-        },
-        plugins: [
+        /*externals: function (context, request, callback) {
+            const match = /^@angular\/([^/]+)\/?$/.exec(request);
+            if (match) {
+                // "@angular/core/*": "var ng.core"
+                // "@angular/common/*": "var ng.common"
+                // "@angular/forms/*": "var ng.forms"
+                // "@angular/platform-browser/*": "var ng.platformBrowser"
+                callback(null, "var ng." + match[1].replace("platform-browser", "platformBrowser"));
+                return;
+            }
+            callback();
+        },*/
+        plugins: [/*
             new webpack.optimize.UglifyJsPlugin({
                 output: {
                     inline_script: true,
                     ascii_only: true
                 }
-            })
+            })*/
         ]
     }).run(checkWebpackErrors(done));
 });

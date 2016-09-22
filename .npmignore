@@ -4,3 +4,5 @@
 /maven
 /doc
 /doc-output
+/build/ts
+/**/*.ngfactory.ts

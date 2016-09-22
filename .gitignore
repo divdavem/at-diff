@@ -6,3 +6,4 @@
 /maven/target
 /doc/impacts.md
 /doc-output
+/**/*.ngfactory.ts

@@ -10,7 +10,9 @@
   "bin": "./bin/at-diff",
   "license": "Apache-2.0",
   "scripts": {
-    "prepublish": "typings install && gulp clean && gulp build && npm run doc",
+    "ngc": "gulp pre-ngc && ngc -p ./tsconfig.json",
+    "ui": "gulp clean && npm run ngc && gulp build",
+    "prepublish": "typings install && npm run ui && npm run doc",
     "lint": "eslint src tasks test doc-templates *.js",
     "mocha": "mocha test",
     "test": "npm run lint && npm run mocha",
@@ -34,10 +36,10 @@
   "devDependencies": {
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
+    "@angular/compiler-cli": "0.6.2",
     "@angular/core": "2.0.0",
     "@angular/forms": "2.0.0",
     "@angular/platform-browser": "2.0.0",
-    "@angular/platform-browser-dynamic": "2.0.0",
     "awesome-typescript-loader": "^2.2.4",
     "eslint": "^3.5.0",
     "grunt": "^1.0.1",
